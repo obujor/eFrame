@@ -33,6 +33,7 @@ function startChildProcess () {
     // Endpoints
     app.use(express.static('static'));
     app.use(favicon(__dirname + '/static/favicon.ico'));
+    app.use('/:battery', require('./pages/page.js'));
     app.use('/', require('./pages/page.js'));
 
     // Error Handling

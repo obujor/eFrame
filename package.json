@@ -10,13 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "boom": "^2.8.0",
+    "dateformat": "~1.0.11",
     "express": "^4.13.1",
     "express-domain-middleware": "^0.1.0",
+    "feed-read": "0.0.1",
     "hbs": "^3.1.0",
     "serve-favicon": "^2.3.0",
     "verror": "^1.6.0",
     "xmldom": "^0.1.19",
-    "xpath": "0.0.9",
-    "dateformat": "~1.0.11"
+    "xpath": "0.0.9"
   }
 }
