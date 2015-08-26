@@ -3,7 +3,8 @@ var cluster = require('cluster'),
     express = require('express'),
     hbs = require('hbs'),
     favicon = require('serve-favicon'),
-    helpers = require('./utils/helpers.js');
+    helpers = require('./utils/helpers.js'),
+    appsUtils = require('./utils/apps.js');
 
 // We use cluster and domains for error management:
 // on unhandled exception the child process is restarted.
@@ -25,15 +26,18 @@ function startChildProcess () {
     app = express();
     app.set('view engine', 'hbs');
     hbs.registerPartials(__dirname + '/views/partials');
-    hbs.registerHelper('link', helpers.link);
+    hbs.registerHelper(helpers);
 
+    appsUtils.load(hbs);
+    
     // Middleware
     app.use(require('express-domain-middleware'));
 
     // Endpoints
     app.use(express.static('static'));
     app.use(favicon(__dirname + '/static/favicon.ico'));
-    app.use('/:battery/:topic', require('./pages/page.js'));
+    app.use('/appsStatic', express.static('apps'));
+    app.use('/:user/:battery(\\d{1,3})/:topic?', require('./pages/page.js'));
 
     // Error Handling
     app.use(errorHandler);

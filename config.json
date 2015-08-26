@@ -6,5 +6,8 @@
         },
         "title": "eFrame",
         "baseUrl": "http://localhost:9006/"
-    }
+    },
+    "apps": [
+        "news"
+    ]
 }
