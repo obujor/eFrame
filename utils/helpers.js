@@ -1,5 +1,6 @@
 var hbs = require('hbs'),
-    fs = require('fs');
+    fs = require('fs'),
+    apps = require('./apps.js');
 
 // Get link for a given URI (remove the starting /)
 exports.link = function (uri) {
@@ -12,9 +13,21 @@ exports.resource = function(app, name) {
 
 exports.userApps = function(args) {
     var data = args.data.root,
-        templateStr = fs.readFileSync(__dirname+'/../views/users/'+data.user.username+'.hbs', 'utf8'),
-        template = hbs.compile(templateStr);
-    return template(data);
+        layout = fs.readFileSync(__dirname+'/../views/layouts/'+data.user.layout+'.hbs', 'utf8'),
+        layoutTpl = hbs.compile(layout),
+        appLayouts = [],
+        views = data.user.apps.map(function(app, index) {
+            var layout = apps.getAppLayoutByPos(index, data.user.layout);
+            appLayouts.push('layout_'+layout);
+            return apps.getAppView(app, layout);
+        });
+    // Filling the layout with apps views
+    var viewsTpl = layoutTpl({
+        appViews: views, 
+        appLayouts: appLayouts
+    });
+
+    return hbs.compile(viewsTpl)(data);
 }
 
 exports.eachSliced = function(context, block) {

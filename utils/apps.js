@@ -32,6 +32,38 @@ exports.getData = function(initData, cb) {
     });
 };
 
+exports.getAppView = function(app, layout) {
+    var getViewPath = function(layout) {
+        return getAppViewsFolder(app)+'/'+app+'_'+layout+'.hbs';
+    }
+    var viewPath = getViewPath(layout);
+
+    if (fs.existsSync(viewPath)) {
+        return fs.readFileSync(viewPath, 'utf8');
+    } else {
+        return fs.readFileSync(getViewPath('full'), 'utf8');
+    }
+};
+
+exports.getAppLayoutByPos = function(index, layout) {
+    switch(layout) {
+        case "bbottomtop":
+            return (!index) ? "horizontal" : "cell";
+        case "ttopbottom":
+            return (index == 2) ? "horizontal" : "cell";
+        case "lleftright":
+            return (index == 2) ? "vertical" : "cell";
+        case "rrightleft":
+            return (!index) ? "vertical" : "cell";
+        case "topbottom":
+            return "horizontal";
+        case "leftright":
+            return "vertical";
+        default:
+            return layout;
+    }
+};
+
 function getAppInfo(name) {
     return {
         name: name,

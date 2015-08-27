@@ -9,5 +9,11 @@
     },
     "apps": [
         "news"
-    ]
+    ],
+    "users": {
+    	"test1": {
+    		"layout": "leftright",
+    		"apps": ["news"]
+    	}
+    }
 }

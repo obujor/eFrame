@@ -1,4 +1,3 @@
-
 var baseContext = require('../config.json').baseContext,
     baseContextStr = JSON.stringify(baseContext);
 
