@@ -32,17 +32,18 @@ exports.getData = function(initData, cb) {
     });
 };
 
-exports.getAppView = function(app, layout) {
+exports.getAppView = function(app, layout, noDefault) {
     var getViewPath = function(layout) {
         return getAppViewsFolder(app)+'/'+app+'_'+layout+'.hbs';
     }
     var viewPath = getViewPath(layout);
 
-    if (fs.existsSync(viewPath)) {
+    if (fs.existsSync(viewPath))
         return fs.readFileSync(viewPath, 'utf8');
-    } else {
+    else if(!noDefault)
         return fs.readFileSync(getViewPath('full'), 'utf8');
-    }
+    else 
+        return "";
 };
 
 exports.getAppLayoutByPos = function(index, layout) {

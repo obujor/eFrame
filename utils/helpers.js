@@ -30,6 +30,12 @@ exports.userApps = function(args) {
     return hbs.compile(viewsTpl)(data);
 }
 
+exports.appHead = function(app, args) {
+    var layout = apps.getAppView(app, 'head', true),
+        tpl = hbs.compile(layout);
+    return tpl(args.data.root);
+}
+
 exports.eachSliced = function(context, block) {
     var ret = "",
         offset = parseInt(block.hash.offset) || 0,
@@ -42,4 +48,8 @@ exports.eachSliced = function(context, block) {
     }
 
     return ret;
+}
+
+exports.temperature = function(temp) {
+    return Math.round(temp);
 }

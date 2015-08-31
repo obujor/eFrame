@@ -1,0 +1,30 @@
+#weather {
+	font-size: 1.5em;
+	padding: 5px;
+	.header {
+		margin-top: 20px;
+		text-align: center;
+		i {
+			font-size: 4em;
+		}
+	}
+	.title {
+		text-align: center;
+		border-bottom: 2px solid black;
+		margin-bottom: 10px;
+		font-weight: bold;
+	}
+	.details .temperature {
+		display: block;
+		float: left;
+		font-size: 2em;
+	}
+	.details .desc {
+		display: block;
+		float: right;
+		line-height: 2em;
+	}
+	.temperature:after {
+		content: "°C";
+	}
+}

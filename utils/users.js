@@ -1,11 +1,9 @@
 var context = require('./context.js'),
-    users = require('../config.json').users;
+    db = require('monk')('localhost/eframe');
 
-exports.getUserData = function (username) {
-    if (users && users[username]) {
-        return context.merge({
-            username: username
-        },users[username]);
-    }
-    return null;
+exports.getUserData = function (username, cb) {
+    var users = db.get('users');
+    users.find({username: username}, function(err, res) {
+        cb(res[0]);
+    });
 };

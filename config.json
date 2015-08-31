@@ -8,12 +8,6 @@
         "baseUrl": "http://localhost:9006/"
     },
     "apps": [
-        "news"
-    ],
-    "users": {
-    	"test1": {
-    		"layout": "leftright",
-    		"apps": ["news"]
-    	}
-    }
+        "news", "weather"
+    ]
 }
