@@ -84,8 +84,6 @@ body {
 }
 
 header {
-    color: @dark-blue;
-    /*background-color: @light-grey;*/
     position: absolute;
     z-index: 1000;
     right: @unit;
@@ -122,16 +120,15 @@ main {
 }
 
 footer {
-    color: @strange-blue;
     width: 100%;
     padding: 5px;
     position: absolute;
     z-index: 1000;
     bottom: 0px;
-    p {
-        text-align: right;
-        margin: 0;
+    text-align: right;
+    span {
         font-size: @font-size-small;
+        background-color: white;
     }
     a {
         font-weight: bold;

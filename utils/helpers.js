@@ -1,6 +1,7 @@
 var hbs = require('hbs'),
     fs = require('fs'),
-    apps = require('./apps.js');
+    apps = require('./apps.js'),
+    dateFormat = require('dateformat');
 
 // Get link for a given URI (remove the starting /)
 exports.link = function (uri) {
@@ -52,4 +53,14 @@ exports.eachSliced = function(context, block) {
 
 exports.temperature = function(temp) {
     return Math.round(temp);
+}
+
+exports.dateNow = function() {
+    var now = new Date();
+    return dateFormat(now, "dd/mm/yyyy");
+}
+
+exports.timeNow = function() {
+    var now = new Date();
+    return dateFormat(now, "HH:MM");
 }
