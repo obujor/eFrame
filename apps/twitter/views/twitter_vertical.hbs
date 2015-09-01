@@ -1,0 +1,8 @@
+<div id="news">
+	<div class="title"><img src="{{resource 'news' 'icon.png'}}"> News</div>
+	<ul>
+		{{#eachSliced news limit="8"}}
+		<li class="news">{{title}}</li>
+		{{/eachSliced}}
+	</ul>
+</div>

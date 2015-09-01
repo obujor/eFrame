@@ -8,6 +8,6 @@
         "baseUrl": "http://localhost:9006/"
     },
     "apps": [
-        "news", "weather"
+        "news", "weather", "twitter"
     ]
 }
