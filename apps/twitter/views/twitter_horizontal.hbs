@@ -1,8 +1,9 @@
-<div id="news">
-	<div class="title"><img src="{{resource 'news' 'icon.png'}}"> News</div>
-	<ul>
-		{{#eachSliced news limit="6"}}
-		<li class="news">{{title}}</li>
-		{{/eachSliced}}
-	</ul>
+<div id="twitter">
+	<div class="title"><img src="{{resource 'twitter' 'icon.png'}}"></div>
+	{{#eachSliced twitter limit="6"}}
+	<div class="twitt">
+		<img src="{{authorImg}}"><span class="author">{{author}}</span>
+		<p>{{{text}}}</p>
+	</div>
+	{{/eachSliced}}
 </div>
