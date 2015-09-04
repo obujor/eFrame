@@ -1,16 +1,17 @@
 var path = require('path'),
     fs = require('fs');
-var apps = require('../config.json').apps;
 var appsFolder = '../apps/';
 
 exports.load = function (hbs) {
+    var apps = getAppsList();
     apps.forEach(function(appName) {
         hbs.registerPartials(getAppViewsFolder(appName));
     });
 };
 
 exports.getData = function(initData, cb) {
-    var appsNr = apps.length,
+    var apps = getAppsList(),
+        appsNr = apps.length,
         appsData = {
             apps: apps.map(getAppInfo)
         };
@@ -65,10 +66,18 @@ exports.getAppLayoutByPos = function(index, layout) {
     }
 };
 
+function getAppsList() {
+    var dir = path.resolve(__dirname+'/'+appsFolder);
+    return fs.readdirSync(dir).filter(function(file) {
+        return fs.statSync(path.join(dir, file)).isDirectory();
+    });
+}
+
 function getAppInfo(name) {
+    var appFolder = __dirname+'/'+appsFolder+name+'/';
     return {
         name: name,
-        hasStyle: fs.existsSync(__dirname+'/'+appsFolder+name+'/resources/style.less')
+        hasStyle: fs.existsSync(appFolder+'resources/style.less')
     }
 }
 

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>eFrame</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	    
+	    <link rel="stylesheet/less" type="text/css" href="client_style.less" />
+	    <link rel="shortcut icon" href="favicon.ico" />
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
+	    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.1/handlebars.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	    <script src="script.js"></script>
+		<script id="layoutSelectionTemplate" type="text/x-handlebars-template">
+	        {{#layouts}}
+				<label>
+				  <input type="radio" name="layout" value="{{this}}" />
+				  <img src="img/icon_{{this}}.png">
+				</label>
+	        {{/layouts}}
+		</script>
+		<script id="appListTemplate" type="text/x-handlebars-template">
+	        {{#apps}}
+				<div class="appItem {{this.name}}">
+				  <img src="{{this.icon}}" alt="{{this.name}}" title="{{this.name}}">
+				  	<h4>{{this.name}}</h4>
+				  	<span>{{this.description}}</span>
+				</div>
+	        {{/apps}}
+		</script>
+	</head>
+    <body>
+
+	    <div class="container mainContainer">
+	    	<img class="logo" src="img/logo_full.png" alt="eFrame logo" title="eFrame logo">
+
+	        <form name="login" class="form-signin">
+		        <h2 class="form-signin-heading">Accedi a eFrame</h2>
+		        <label for="inputID" class="sr-only">ID dispositivo</label>
+		        <input type="text" id="inputID" class="form-control" placeholder="ID dispositivo" required autofocus>
+		        <label for="inputPassword" class="sr-only">Password</label>
+		        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		        <button class="btn btn-lg btn-primary btn-block" type="submit">Accedi</button>
+		    </form>
+			
+			<div id="mainView">
+				<div id="sidebar">
+					<h3>Seleziona un layout</h3>
+					<div id="layoutSelectors"></div>
+					<h3>Seleziona le app</h3>
+					<span>Trascina le app nella cornice a destra</span>
+					<div id="appList"></div>
+				</div>
+
+				<div id="frameScreen">
+					<div class="screen full">
+			            <div class="cell">
+			                <span>App</span>
+			            </div>
+			        </div>
+			        <div class="screen leftright">
+			            <div class="cell left">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell right">
+			                <span>App 2</span>
+			            </div>
+			        </div>
+
+			        <div class="screen topbottom">
+			            <div class="cell top">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell bottom">
+			                <span>App 2</span>
+			            </div>
+			        </div>
+			        
+			        <div class="screen lleftright">
+			            <div class="cell left top">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell left bottom">
+			                <span>App 2</span>
+			            </div>
+			            <div class="cell right">
+			                <span>App 3</span>
+			            </div>
+			        </div>
+			        <div class="screen rrightleft">
+			            <div class="cell left">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell right top">
+			                <span>App 2</span>
+			            </div>
+			            <div class="cell right bottom">
+			                <span>App 3</span>
+			            </div>
+			        </div>
+			        <div class="screen ttopbottom">
+			            <div class="cell left top">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell right top">
+			                <span>App 2</span>
+			            </div>
+			            <div class="cell bottom">
+			                <span>App 3</span>
+			            </div>
+			        </div>
+			        <div class="screen bbottomtop">
+			            <div class="cell top">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell left bottom">
+			                <span>App 2</span>
+			            </div>
+			            <div class="cell right bottom">
+			                <span>App 3</span>
+			            </div>
+			        </div>
+			        <div class="screen cells">
+			            <div class="cell left top">
+			                <span>App 1</span>
+			            </div>
+			            <div class="cell left bottom">
+			                <span>App 2</span>
+			            </div>
+			            <div class="cell right top">
+			                <span>App 3</span>
+			            </div>
+			            <div class="cell right bottom">
+			                <span>App 4</span>
+			            </div>
+			        </div>
+				</div>
+
+			</div>
+
+	    </div>
+    </body>
+</html>
