@@ -81,7 +81,7 @@ $(function () {
 
     function resetDraggable() {
         $('.appItem').removeClass('correct').draggable( 'enable' )
-                    .draggable( 'option', 'revert', false )
+                    .draggable( 'option', 'revert', true )
                     .animate({
                         top: "0px",
                         left: "0px"
