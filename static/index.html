@@ -26,7 +26,7 @@
 		</script>
 		<script id="appListTemplate" type="text/x-handlebars-template">
 	        {{#apps}}
-				<div class="appItem {{this.name}}">
+				<div class="appItem" data-name="{{this.name}}">
 				  <img src="{{this.icon}}" alt="{{this.name}}" title="{{this.name}}">
 				  	<h4>{{this.name}}</h4>
 				  	<span>{{this.description}}</span>
@@ -140,7 +140,9 @@
 			            </div>
 			        </div>
 				</div>
-
+				<div id="settingsActions">
+					<button id="saveSettings" class="btn btn-lg btn-primary btn-block">Salva impostazioni</button>
+				</div>
 			</div>
 
 	    </div>

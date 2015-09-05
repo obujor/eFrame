@@ -1,4 +1,5 @@
 var cluster = require('cluster'),
+    bodyParser = require('body-parser'),
     Boom = require('boom'),
     express = require('express'),
     hbs = require('hbs'),
@@ -32,11 +33,16 @@ function startChildProcess () {
     
     // Middleware
     app.use(require('express-domain-middleware'));
+    app.use( bodyParser.json() );
+    app.use(bodyParser.urlencoded({
+      extended: true
+    }));
 
     // Endpoints
     app.use(express.static('static'));
     app.use(favicon(__dirname + '/static/favicon.ico'));
     app.use('/appsStatic', express.static('apps'));
+    app.use('/apps/:user?', require('./pages/apps.js'));
     app.use('/:user/:battery(\\d{1,3})/:topic?', require('./pages/page.js'));
 
     // Error Handling

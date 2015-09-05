@@ -21,6 +21,20 @@ $(function () {
 
     setDefaultLayout();
 
+    $('#saveSettings').click(function() {
+        var layout = $('input[name=layout]:checked').val(),
+            apps = $('.screen.visible').data('apps');
+        
+        if (layout && apps) {
+            var data = {
+                layout: layout,
+                apps: apps
+            };
+            $.post('apps', data, function(res) {
+                console.log(res);
+            }, 'json');
+        }
+    });
 
     function setDefaultLayout() {
         $('input:radio[value="full"]').prop( "checked", true );
@@ -39,35 +53,28 @@ $(function () {
     function fillAppListTemplate() {
         var template = $('#appListTemplate').html();
         var compiledTemplate = Handlebars.compile(template);
-        var result = compiledTemplate({
-            apps: [{
-                name: 'news',
-                description: 'Aggregatore di notizie da diverse testate giornalistiche',
-                icon: 'http://localhost:9006/appsStatic/news/resources/icon.png'
-            },{
-                name: 'weather',
-                description: 'Meteo della tua citta\'',
-                icon: 'http://localhost:9006/appsStatic/weather/resources/icon.png'
-            },{
-                name: 'twitter',
-                description: 'Visualizzatore di twitts dell\'attualita\'',
-                icon: 'http://localhost:9006/appsStatic/twitter/resources/icon.png'
-            }]
+
+        var setDraggables = function() {
+            $('.appItem').draggable( {
+              containment: 'document',
+              stack: '.appItem',
+              cursor: 'move',
+              revert: true
+            } );
+
+            $('.cell').droppable( {
+              accept: '.appItem',
+              hoverClass: 'hovered',
+              drop: handleCardDrop
+            } );
+        };
+
+        $.getJSON('/apps', function(apps) {
+            var result = compiledTemplate({apps: apps});
+            $('#appList').html(result);
+            setDraggables();
         });
-        $('#appList').html(result);
 
-        $('.appItem').draggable( {
-          containment: 'document',
-          stack: '.appItem',
-          cursor: 'move',
-          revert: true
-        } );
-
-        $('.cell').droppable( {
-          accept: '.appItem',
-          hoverClass: 'hovered',
-          drop: handleCardDrop
-        } );
     }
 
     function handleCardDrop( event, ui ) {
@@ -77,6 +84,14 @@ $(function () {
         ui.draggable.position( { of: $(this), my: 'center center', at: 'center center' } );
         ui.draggable.draggable( 'option', 'revert', false );
         $(this).children('span').hide();
+
+        var layout = $(this).parent();
+        var apps = layout.data('apps') || [];
+        if (!apps.length) {
+            apps.length = layout.children().length;
+        }
+        apps[$(this).index()] = ui.draggable.data('name');
+        layout.data('apps', apps);
     }
 
     function resetDraggable() {

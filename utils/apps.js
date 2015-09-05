@@ -1,4 +1,5 @@
 var path = require('path'),
+    context = require('./context.js'),
     fs = require('fs');
 var appsFolder = '../apps/';
 
@@ -66,6 +67,10 @@ exports.getAppLayoutByPos = function(index, layout) {
     }
 };
 
+exports.getAppsData = function() {
+    return getAppsList().map(getAppInfo);
+};
+
 function getAppsList() {
     var dir = path.resolve(__dirname+'/'+appsFolder);
     return fs.readdirSync(dir).filter(function(file) {
@@ -75,10 +80,13 @@ function getAppsList() {
 
 function getAppInfo(name) {
     var appFolder = __dirname+'/'+appsFolder+name+'/';
-    return {
+    var manifest = JSON.parse(fs.readFileSync(appFolder+'manifest.json', 'utf8'));
+
+    return context.merge(manifest, {
         name: name,
+        icon: 'appsStatic/'+name+'/resources/icon.png',
         hasStyle: fs.existsSync(appFolder+'resources/style.less')
-    }
+    });
 }
 
 function getAppController(name) {
