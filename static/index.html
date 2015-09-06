@@ -5,16 +5,16 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 	    <title>eFrame</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/bootstrap.min.css">
 	    
 	    <link rel="stylesheet/less" type="text/css" href="client_style.less" />
 	    <link rel="shortcut icon" href="favicon.ico" />
-	    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
-	    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.1/handlebars.min.js"></script>
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	    <script src="lib/less.min.js"></script>
+	    <script src="lib/jquery-2.1.4.min.js"></script>
+	    <script src="lib/jquery-ui.min.js"></script>
+	    <script src="lib/handlebars.min.js"></script>
+		<script src="lib/bootstrap.min.js"></script>
+		<script src="lib/bootstrap-waitingfor.min.js"></script>
 	    <script src="script.js"></script>
 		<script id="layoutSelectionTemplate" type="text/x-handlebars-template">
 	        {{#layouts}}
@@ -46,6 +46,10 @@
 		        <label for="inputPassword" class="sr-only">Password</label>
 		        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 		        <button class="btn btn-lg btn-primary btn-block" type="submit">Accedi</button>
+		        <div role="alert" class="alert alert-danger alert-dismissible fade in">
+			      <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+			      Accesso non riuscito, credenziali errate!
+			    </div>
 		    </form>
 			
 			<div id="mainView">
@@ -141,6 +145,14 @@
 			        </div>
 				</div>
 				<div id="settingsActions">
+					<div role="alert" class="alert alert-success alert-dismissible fade in">
+				      <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+				      Le impostazioni sono state salvate!
+				    </div>
+				    <div role="alert" class="alert alert-danger alert-dismissible fade in">
+				      <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+				      Le impostazioni non sono state salvate, a causa di un errore!
+				    </div>
 					<button id="saveSettings" class="btn btn-lg btn-primary btn-block">Salva impostazioni</button>
 				</div>
 			</div>

@@ -2,10 +2,22 @@ $(function () {
     var loginForm = $('form[name=login]');
 
     $('#mainView').hide();
+    $('#settingsActions .alert').hide();
+    $('form[name=login] .alert').hide();
     loginForm.submit(function(event){
+        var user = $('#inputID').val();
+        waitingDialog.show();
         event.preventDefault();
-        loginForm.fadeOut(200, function() {
-            $('#mainView').show();
+        $.getJSON('/login/'+user, function(res) {
+            if (res.success) {
+                loginForm.fadeOut(200, function() {
+                    $('#mainView').show();
+                    waitingDialog.hide();
+                });
+            } else {
+                showAlert('form[name=login] .alert');
+                waitingDialog.hide();
+            }
         });
     });
 
@@ -23,19 +35,33 @@ $(function () {
 
     $('#saveSettings').click(function() {
         var layout = $('input[name=layout]:checked').val(),
-            apps = $('.screen.visible').data('apps');
-        
+            apps = $('.screen.visible').data('apps'),
+            user = $('#inputID').val();
+
         if (layout && apps) {
+            waitingDialog.show();
             var data = {
                 layout: layout,
                 apps: apps
             };
-            $.post('apps', data, function(res) {
-                console.log(res);
+            $.post('apps/'+user, data, function(res) {
+                if (res.success) {
+                    showAlert('#settingsActions .alert-success');
+                } else {
+                    showAlert('#settingsActions .alert-danger');
+                }
+                waitingDialog.hide();
+
             }, 'json');
         }
     });
-
+    
+    function showAlert(selector) {
+        $(selector).show();
+        setTimeout(function() {
+            $(selector).hide();
+        }, 2000);
+    };
     function setDefaultLayout() {
         $('input:radio[value="full"]').prop( "checked", true );
         $('.screen.full').toggleClass('visible');

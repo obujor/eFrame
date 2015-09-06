@@ -7,3 +7,17 @@ exports.getUserData = function (username, cb) {
         cb(res[0]);
     });
 };
+
+exports.setUserData = function (username, data, cb) {
+    exports.getUserData(username, function(userData) {
+        var users = db.get('users');
+        if( userData ) {
+            context.merge(userData, data);
+            users.update({username: username}, userData, function(err, res) {
+                cb((!err && res > 0));
+            });
+        } else {
+            cb(false);
+        }
+    });
+};

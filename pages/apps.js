@@ -1,4 +1,5 @@
 var context = require('../utils/context.js'),
+    users = require('../utils/users.js'),
     appsUtils = require('../utils/apps.js');
 
 module.exports = function (req, res, next) {
@@ -7,12 +8,19 @@ module.exports = function (req, res, next) {
     if(req.method == 'GET') {
         res.json(appsData);
     } else if (req.method == 'POST') {
-        var data = req.body;
-        var result = {success: false};
+        var data = req.body,
+            user = req.params.user;
 
-        if (data.layout && data.apps.length) {
-            result.success = true;
+        if (user && data.layout && data.apps.length) {
+            users.setUserData(user, data, function(success) {
+                res.json({
+                    success: success
+                });        
+            });
+        } else {
+            res.json({
+                success: false
+            });
         }
-        res.json(result);
     }
 };
