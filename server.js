@@ -43,6 +43,7 @@ function startChildProcess () {
     app.use(favicon(__dirname + '/static/favicon.ico'));
     app.use('/appsStatic', express.static('apps'));
     app.use('/login/:user', require('./pages/login.js'));
+    app.use('/apps/:user/:app', require('./pages/apps.js'));
     app.use('/apps/:user?', require('./pages/apps.js'));
     app.use('/:user/:battery(\\d{1,3})/:topic?', require('./pages/page.js'));
 

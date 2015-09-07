@@ -9,9 +9,18 @@ module.exports = function (req, res, next) {
         res.json(appsData);
     } else if (req.method == 'POST') {
         var data = req.body,
-            user = req.params.user;
+            user = req.params.user,
+            app = req.params.app;
 
-        if (user && data.layout && data.apps.length) {
+        if (app && user) {
+            var newData = {};
+            newData[app] = data;
+            users.setUserData(user, newData, function(success) {
+                res.json({
+                    success: success
+                });        
+            });
+        } else if (user && data.layout && data.apps.length) {
             users.setUserData(user, data, function(success) {
                 res.json({
                     success: success

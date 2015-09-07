@@ -81,11 +81,13 @@ function getAppsList() {
 function getAppInfo(name) {
     var appFolder = __dirname+'/'+appsFolder+name+'/';
     var manifest = JSON.parse(fs.readFileSync(appFolder+'manifest.json', 'utf8'));
+    var interactionView = exports.getAppView(name, 'interaction', true);
 
     return context.merge(manifest, {
         name: name,
         icon: 'appsStatic/'+name+'/resources/icon.png',
-        hasStyle: fs.existsSync(appFolder+'resources/style.less')
+        hasStyle: fs.existsSync(appFolder+'resources/style.less'),
+        interactionView: interactionView
     });
 }
 

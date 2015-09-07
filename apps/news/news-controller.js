@@ -1,7 +1,8 @@
 var feed = require("feed-read");
 
 exports.getData = function (user, device, cb) {
-    getNews(user.topic, cb);
+    var topic = user.news && user.news.topic;
+    getNews(topic, cb);
 };
 
 function getNews(tp, cb) {

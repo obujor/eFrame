@@ -6,7 +6,10 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 	    <title>eFrame</title>
 		<link rel="stylesheet" href="lib/bootstrap.min.css">
-	    
+		<link rel="stylesheet" href="lib/jquery-ui.min.css">
+		<link rel="stylesheet" href="lib/jquery-ui.structure.min.css">
+		<link rel="stylesheet" href="lib/jquery-ui.theme.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	    <link rel="stylesheet/less" type="text/css" href="client_style.less" />
 	    <link rel="shortcut icon" href="favicon.ico" />
 	    <script src="lib/less.min.js"></script>
@@ -16,6 +19,7 @@
 		<script src="lib/bootstrap.min.js"></script>
 		<script src="lib/bootstrap-waitingfor.min.js"></script>
 	    <script src="script.js"></script>
+
 		<script id="layoutSelectionTemplate" type="text/x-handlebars-template">
 	        {{#layouts}}
 				<label>
@@ -24,15 +28,26 @@
 				</label>
 	        {{/layouts}}
 		</script>
+
 		<script id="appListTemplate" type="text/x-handlebars-template">
 	        {{#apps}}
-				<div class="appItem" data-name="{{this.name}}">
-				  <img src="{{this.icon}}" alt="{{this.name}}" title="{{this.name}}">
+				<div class="appItem" data-name="{{this.name}}" {{#if interactionView}} data-settings="true" {{/if}}>
+					<img src="{{this.icon}}" alt="{{this.name}}" title="{{this.name}}">
 				  	<h4>{{this.name}}</h4>
+				  	<button class="appSettings btn btn-sm" type="button"><i class="fa fa-cog fa-2x"></i></button>
 				  	<span>{{this.description}}</span>
 				</div>
 	        {{/apps}}
 		</script>
+
+		<script id="appDialogTemplate" type="text/x-handlebars-template">
+			{{#apps}}
+				<div class="appDialog" title="{{title}}" data-name="{{name}}">
+				  {{{interactionView}}}
+				</div>
+			{{/apps}}
+		</script>
+
 	</head>
     <body>
 
