@@ -1,5 +1,5 @@
-@screen-width: 600px;
-@screen-height: 450px;
+@screen-width: 480px;
+@screen-height: 360px;
 @body-background-color: #eee;
 @frame-border-color: #404040;
 @frame-border-size: 2px;
@@ -12,7 +12,7 @@ body {
 
 .mainContainer {
   margin: 0 auto;
-  max-width: 980px;
+  width: 1024px;
 
   .logo {
     display: block;
@@ -57,23 +57,41 @@ body {
   margin-bottom: 10px;
 }
 
-#sidebar {
+#leftbar {
   float: left;
-  width: 330px;
-  padding-left: 20px;
+  width: 220px;
+  margin-left: 40px;
 
-  h3 {
-    margin-top: 10px;
+  label.btn {
+    padding: 6px 8px;
+    margin-bottom: 1px;
   }
-  h3:nth-of-type(2) {
+
+  #checkAllHours, #showLayouts {
+    width: 207px;
+    margin-bottom: 5px;
+  }
+}
+
+
+#rightbar {
+  float: right;
+  h3 {
     margin-bottom: 0px;
   }
+}
+
+#rightbar h3, #leftbar h3 {
+  margin-top: 5px;
+}
+
+#centerView {
+  display: inline-block;
 }
 
 #frameScreen {
   width: @screen-width;
   height: @screen-height;
-  float: right;
   position: relative;
   background-color: transparent;
   border-color: @frame-border-color;
@@ -143,7 +161,7 @@ body {
   label > input + img{ /* IMAGE STYLES */
     cursor:pointer;
     border:2px solid transparent;
-    width: 64px;
+    width: 48px;
   }
   label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
     -webkit-box-shadow: inset 2px 2px 15px 0px rgba(0,0,0,0.40);
@@ -156,15 +174,17 @@ body {
   .appItem {
     border: 1px dashed transparent;
     margin-bottom: 10px;
-    width: 280px;
-    min-height: 64px;
+    width: 240px;
+    min-height: 48px;
+    padding: 2px;
     clear: both;
     h4 {
+      margin-top: 0px;
       margin-bottom: 0px;
       text-transform: capitalize;
     }
     img {
-      width: 64px;
+      width: 48px;
       vertical-align: middle;
       margin-right: 10px;
       float: left;
@@ -172,8 +192,8 @@ body {
 
     .appSettings {
       position: absolute;
-      right: 0px;
-      top: -5px;
+      right: 5px;
+      top: -10px;
     }
   }
   .appItem:hover {
@@ -206,4 +226,141 @@ body {
 
 .ui-dialog-titlebar-close {
   visibility: hidden;
+}
+
+#savedLayouts {
+  @center-h: 23px;
+  @center-v: 12px;
+  @top: 0px;
+  @bottom: 24px;
+  @left: 5px;
+  @right: 35px;
+
+  .layoutPreview:hover {
+    border-color: @frame-border-color;
+  }
+
+  .layoutPreview {
+    position: relative;
+    margin-bottom: 5px;
+    padding: 2px;
+    clear: both;
+    min-height: 55px;
+
+    border: 1px dashed;
+    border-color: transparent; 
+
+    .layoutAppIcon {
+      width: 24px;
+      position: absolute;
+    }
+
+    .layoutIcon {
+      width: 64px;
+      float: left;
+      margin-right: 5px;
+    }
+  }
+
+  .layoutPreview[data-name=full] {
+    .layoutAppIcon {
+      left: @center-h;
+      top: @center-v;
+    }
+  }
+
+  .layoutPreview[data-name=rrightleft] {
+    .layoutAppIcon:nth-child(2) {
+      left: @left;
+      top: @center-v;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @right;
+      top: @top
+    }
+    .layoutAppIcon:nth-child(4) {
+      left: @right;
+      top: @bottom;
+    }
+  }
+  .layoutPreview[data-name=lleftright] {
+    .layoutAppIcon:nth-child(2) {
+      left: @left;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @left;
+      top: @bottom;
+    }
+    .layoutAppIcon:nth-child(4) {
+      left: @right;
+      top: @center-v;
+    }
+  }
+  .layoutPreview[data-name=ttopbottom] {
+    .layoutAppIcon:nth-child(2) {
+      left: @left;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @right;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(4) {
+      left: @center-h;
+      top: @bottom;
+    }
+  }
+  .layoutPreview[data-name=bbottomtop] {
+    .layoutAppIcon:nth-child(2) {
+      left: @center-h;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @left;
+      top: @bottom;
+    }
+    .layoutAppIcon:nth-child(4) {
+      left: @right;
+      top: @bottom;
+    }
+  }
+  .layoutPreview[data-name=leftright] {
+    .layoutAppIcon:nth-child(2) {
+      left: @left;
+      top: @center-v;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @right;
+      top: @center-v;
+    }
+  }
+  .layoutPreview[data-name=topbottom] {
+    .layoutAppIcon:nth-child(2) {
+      left: @center-h;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @center-h;
+      top: @bottom;
+    }
+  }
+  .layoutPreview[data-name=cells] {
+    .layoutAppIcon:nth-child(2) {
+      left: @left;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(3) {
+      left: @left;
+      top: @bottom;
+    }
+    .layoutAppIcon:nth-child(4) {
+      left: @right;
+      top: @top;
+    }
+    .layoutAppIcon:nth-child(5) {
+      left: @right;
+      top: @bottom;
+    }
+  }
 }

@@ -5,8 +5,8 @@ module.exports = function (req, res, next) {
     var user = req.params.user;
 
     users.getUserData(user, function(data) {
-        res.json({
+        res.json(context.merge({
             success: data != null
-        });
+        }, data || {}));
     });
 };

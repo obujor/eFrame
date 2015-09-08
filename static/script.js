@@ -5,7 +5,13 @@ $(function () {
     fillAppListTemplate();
     setupLayout();
     setDefaultLayout();
+    setupHours();
     setupSaveSettings();
+    setupShowLayouts();
+
+    Handlebars.registerHelper('getAppIcon', function(name) {
+        return name && $('.appItem[data-name='+name+']').children('img').attr('src');
+    });
 
     function hideUnusedElements() {
         $('#mainView').hide();
@@ -17,10 +23,9 @@ $(function () {
         var loginForm = $('form[name=login]');
     
         loginForm.submit(function(event){
-            var user = $('#inputID').val();
             waitingDialog.show();
             event.preventDefault();
-            $.getJSON('/login/'+user, function(res) {
+            getUserData(function(res) {
                 if (res.success) {
                     loginForm.fadeOut(200, function() {
                         $('#mainView').show();
@@ -32,6 +37,11 @@ $(function () {
                 }
             });
         });
+    }
+
+    function getUserData(cb) {
+        var user = $('#inputID').val();
+        $.getJSON('/login/'+user, cb);
     }
 
     function fillLayoutTemplate() {
@@ -136,16 +146,41 @@ $(function () {
         $('input:radio[value="full"]').prop( "checked", true );
         $('.screen.full').toggleClass('visible');
     }
+
+    function setupHours() {
+        $('#checkAllHours').click(function() {
+            var state = !$(this).is('.active');
+            $('#hoursCheckers .btn-group label').toggleClass('active', state);
+            $('#hoursCheckers .btn-group input').prop('checked', state);
+        });
+
+        var toggleAllDay = function(state) {
+            $('#checkAllHours').toggleClass('active', state);
+            $('#checkAllHours').prop('aria-pressed', state);
+        };
+
+        var checks = $('#hours input[type=checkbox]');
+        checks.change(function() {
+            var selected = $('#hours').serializeArray();
+            toggleAllDay(selected.length == checks.length);
+        });
+    }
     
     function setupSaveSettings () {
         $('#saveSettings').click(function() {
             var layout = $('input[name=layout]:checked').val(),
                 apps = $('.screen.visible').data('apps'),
-                user = $('#inputID').val();
+                user = $('#inputID').val(),
+                hours = $('#hours').serializeArray().reduce(function(prev, cur) {
+                    return prev+cur.name+',';
+                }, "");
+
+            hours = hours.length && hours.substring(0, hours.length-1);
 
             if (layout && apps) {
                 waitingDialog.show();
                 var data = {
+                    hours: hours || "00-24",
                     layout: layout,
                     apps: apps
                 };
@@ -162,6 +197,41 @@ $(function () {
         });
     }
 
+    function setupShowLayouts() {
+
+        $('#savedLayouts').dialog({
+          autoOpen: false,
+          height: 500,
+          width: 450,
+          modal: true,
+          buttons: {
+            Chiudi: function() {
+              $(this).dialog( "close" );
+            },
+            Salva: function(){}
+          }
+        });
+
+        $('#showLayouts').click(function() {
+            var $btn = $(this).button('loading')
+            getUserData(function(res) {
+                var layouts = Object.keys(res.layouts).map(function (key) {
+                    return res.layouts[key];
+                });
+                console.log(layouts);
+                var template = $('#layoutListTemplate').html();
+                var compiledTemplate = Handlebars.compile(template);
+                var result = compiledTemplate({
+                    layouts: layouts
+                });
+                console.log(res.layouts);
+                $('#savedLayouts').html(result);
+                $('#savedLayouts').dialog('open');
+                $btn.button('reset');
+            });
+        });
+    }
+
     function showAlert(selector) {
         $(selector).show();
         setTimeout(function() {
@@ -174,7 +244,6 @@ $(function () {
         $('.appSettings').hide();
         $('.appSettings').click(function() {
             var app = $(this).parent().data('name');
-            console.log(app);
             $('.appDialog[data-name="'+app+'"]').dialog( "open" );
         });
     }

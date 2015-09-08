@@ -10,14 +10,44 @@ exports.getUserData = function (username, cb) {
 
 exports.setUserData = function (username, data, cb) {
     exports.getUserData(username, function(userData) {
-        var users = db.get('users');
         if( userData ) {
             context.merge(userData, data);
-            users.update({username: username}, userData, function(err, res) {
-                cb((!err && res > 0));
-            });
+            updateUserData(username, userData, cb);
         } else {
             cb(false);
         }
     });
 };
+
+exports.setUserLayout = function(username, data, cb) {
+    exports.getUserData(username, function(userData) {
+        if( userData ) {
+            var layouts = userData.layouts || {};
+            var hours = data.hours;
+
+            data.hours = data.hours.split(',').map(function(h){
+                h = h.split('-');
+                return {
+                    from: h[0],
+                    to: h[1]
+                };
+            });
+
+            layouts[hours] = data;
+
+            context.merge(userData, {
+                layouts: layouts
+            });
+            updateUserData(username, userData, cb);
+        } else {
+            cb(false);
+        }
+    });
+}
+
+function updateUserData (user, data, cb) {
+    var users = db.get('users');
+    users.update({username: user}, data, function(err, res) {
+        cb((!err && res > 0));
+    });
+}

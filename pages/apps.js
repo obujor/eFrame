@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
                 });        
             });
         } else if (user && data.layout && data.apps.length) {
-            users.setUserData(user, data, function(success) {
+            users.setUserLayout(user, data, function(success) {
                 res.json({
                     success: success
                 });        

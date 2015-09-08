@@ -4,14 +4,14 @@ var path = require('path'),
 var appsFolder = '../apps/';
 
 exports.load = function (hbs) {
-    var apps = getAppsList();
+    var apps = exports.getAppsList();
     apps.forEach(function(appName) {
         hbs.registerPartials(getAppViewsFolder(appName));
     });
 };
 
 exports.getData = function(initData, cb) {
-    var apps = getAppsList(),
+    var apps = exports.getAppsList(),
         appsNr = apps.length,
         appsData = {
             apps: apps.map(getAppInfo)
@@ -62,16 +62,18 @@ exports.getAppLayoutByPos = function(index, layout) {
             return "horizontal";
         case "leftright":
             return "vertical";
+        case "cells":
+            return "cell";
         default:
             return layout;
     }
 };
 
 exports.getAppsData = function() {
-    return getAppsList().map(getAppInfo);
+    return exports.getAppsList().map(getAppInfo);
 };
 
-function getAppsList() {
+exports.getAppsList = function() {
     var dir = path.resolve(__dirname+'/'+appsFolder);
     return fs.readdirSync(dir).filter(function(file) {
         return fs.statSync(path.join(dir, file)).isDirectory();

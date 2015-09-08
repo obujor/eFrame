@@ -29,6 +29,20 @@
 	        {{/layouts}}
 		</script>
 
+		<script id="layoutListTemplate" type="text/x-handlebars-template">
+			{{#layouts}}
+				<div class="layoutPreview" data-name="{{layout}}">
+					<img class="layoutIcon" src="img/icon_{{layout}}.png">
+					{{#each apps}}
+						<img class="layoutAppIcon" src="{{getAppIcon this}}" title="{{this}}" alt="{{this}}">
+					{{/each}}
+					{{#each hours}}
+						<span class="badge">{{from}}:00 - {{to}}:00</span>
+					{{/each}}
+				</div>
+			{{/layouts}}
+		</script>
+
 		<script id="appListTemplate" type="text/x-handlebars-template">
 	        {{#apps}}
 				<div class="appItem" data-name="{{this.name}}" {{#if interactionView}} data-settings="true" {{/if}}>
@@ -68,96 +82,135 @@
 		    </form>
 			
 			<div id="mainView">
-				<div id="sidebar">
+				<div id="leftbar">
+					<div id="hoursCheckers">
+						<h3>Seleziona l'orario</h3>
+						<button id="checkAllHours" type="button" class="btn btn-default btn-block" data-toggle="button" aria-pressed="false" autocomplete="off">
+						  Tutto il giorno
+						</button>
+						<form id="hours">
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="06-09"> 06:00 - 09:00
+							  </label>
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="09-12"> 09:00 - 12:00
+							  </label>
+							</div>
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="12-14"> 12:00 - 14:00
+							  </label>
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="14-19"> 14:00 - 19:00
+							  </label>
+							</div>
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="19-21"> 19:00 - 21:00
+							  </label>
+							  <label class="btn btn-default">
+							    <input type="checkbox" autocomplete="off" name="21-06"> 21:00 - 06:00
+							  </label>
+							</div>
+						</form>
+					</div>
 					<h3>Seleziona un layout</h3>
 					<div id="layoutSelectors"></div>
-					<h3>Seleziona le app</h3>
-					<span>Trascina le app nella cornice a destra</span>
-					<div id="appList"></div>
+					<button id="showLayouts" class="btn btn-primary" type="button" data-loading-text="Caricamento...">
+						Visualizza layout salvati
+					</button>
+					<div id="savedLayouts" title="Layout salvati">Loading...</div>
 				</div>
+				<div id="centerView">
+					<div id="frameScreen">
+						<div class="screen full">
+				            <div class="cell">
+				                <span>App</span>
+				            </div>
+				        </div>
+				        <div class="screen leftright">
+				            <div class="cell left">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell right">
+				                <span>App 2</span>
+				            </div>
+				        </div>
 
-				<div id="frameScreen">
-					<div class="screen full">
-			            <div class="cell">
-			                <span>App</span>
-			            </div>
-			        </div>
-			        <div class="screen leftright">
-			            <div class="cell left">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell right">
-			                <span>App 2</span>
-			            </div>
-			        </div>
-
-			        <div class="screen topbottom">
-			            <div class="cell top">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell bottom">
-			                <span>App 2</span>
-			            </div>
-			        </div>
-			        
-			        <div class="screen lleftright">
-			            <div class="cell left top">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell left bottom">
-			                <span>App 2</span>
-			            </div>
-			            <div class="cell right">
-			                <span>App 3</span>
-			            </div>
-			        </div>
-			        <div class="screen rrightleft">
-			            <div class="cell left">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell right top">
-			                <span>App 2</span>
-			            </div>
-			            <div class="cell right bottom">
-			                <span>App 3</span>
-			            </div>
-			        </div>
-			        <div class="screen ttopbottom">
-			            <div class="cell left top">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell right top">
-			                <span>App 2</span>
-			            </div>
-			            <div class="cell bottom">
-			                <span>App 3</span>
-			            </div>
-			        </div>
-			        <div class="screen bbottomtop">
-			            <div class="cell top">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell left bottom">
-			                <span>App 2</span>
-			            </div>
-			            <div class="cell right bottom">
-			                <span>App 3</span>
-			            </div>
-			        </div>
-			        <div class="screen cells">
-			            <div class="cell left top">
-			                <span>App 1</span>
-			            </div>
-			            <div class="cell left bottom">
-			                <span>App 2</span>
-			            </div>
-			            <div class="cell right top">
-			                <span>App 3</span>
-			            </div>
-			            <div class="cell right bottom">
-			                <span>App 4</span>
-			            </div>
-			        </div>
+				        <div class="screen topbottom">
+				            <div class="cell top">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell bottom">
+				                <span>App 2</span>
+				            </div>
+				        </div>
+				        
+				        <div class="screen lleftright">
+				            <div class="cell left top">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell left bottom">
+				                <span>App 2</span>
+				            </div>
+				            <div class="cell right">
+				                <span>App 3</span>
+				            </div>
+				        </div>
+				        <div class="screen rrightleft">
+				            <div class="cell left">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell right top">
+				                <span>App 2</span>
+				            </div>
+				            <div class="cell right bottom">
+				                <span>App 3</span>
+				            </div>
+				        </div>
+				        <div class="screen ttopbottom">
+				            <div class="cell left top">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell right top">
+				                <span>App 2</span>
+				            </div>
+				            <div class="cell bottom">
+				                <span>App 3</span>
+				            </div>
+				        </div>
+				        <div class="screen bbottomtop">
+				            <div class="cell top">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell left bottom">
+				                <span>App 2</span>
+				            </div>
+				            <div class="cell right bottom">
+				                <span>App 3</span>
+				            </div>
+				        </div>
+				        <div class="screen cells">
+				            <div class="cell left top">
+				                <span>App 1</span>
+				            </div>
+				            <div class="cell left bottom">
+				                <span>App 2</span>
+				            </div>
+				            <div class="cell right top">
+				                <span>App 3</span>
+				            </div>
+				            <div class="cell right bottom">
+				                <span>App 4</span>
+				            </div>
+				        </div>
+					</div>
+				</div>
+				<div id="rightbar">
+					<h3>Seleziona le app</h3>
+					<span>Trascina le app nella cornice a sinistra</span>
+					<div id="appList"></div>
 				</div>
 				<div id="settingsActions">
 					<div role="alert" class="alert alert-success alert-dismissible fade in">
