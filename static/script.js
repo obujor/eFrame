@@ -210,6 +210,7 @@ $(function () {
                 }).toArray();
 
             waitingDialog.show();
+            layouts = (layouts.length) ? layouts : 0;
             $.post('apps/'+user, {
                 layoutsSaved: layouts
             }, function(res) {

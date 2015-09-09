@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
                     success: success
                 });        
             });
-        } else if (user && data.layoutsSaved) {
+        } else if (user && data.layoutsSaved != undefined) {
             users.removeUserLayouts(user, data.layoutsSaved, function(success) {
                 res.json({
                     success: success

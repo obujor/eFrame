@@ -46,6 +46,7 @@ exports.setUserLayout = function(username, data, cb) {
 };
 
 exports.removeUserLayouts = function(username, layoutsToKeep, cb) {
+    layoutsToKeep = (layoutsToKeep == 0) ? [] : layoutsToKeep;
     exports.getUserData(username, function(userData) {
         if( userData ) {
             var layouts = userData.layouts || {};
