@@ -20,6 +20,12 @@ module.exports = function (req, res, next) {
                     success: success
                 });        
             });
+        } else if (user && data.layoutsSaved) {
+            users.removeUserLayouts(user, data.layoutsSaved, function(success) {
+                res.json({
+                    success: success
+                });        
+            });
         } else if (user && data.layout && data.apps.length) {
             users.setUserLayout(user, data, function(success) {
                 res.json({

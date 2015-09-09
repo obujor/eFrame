@@ -43,7 +43,23 @@ exports.setUserLayout = function(username, data, cb) {
             cb(false);
         }
     });
-}
+};
+
+exports.removeUserLayouts = function(username, layoutsToKeep, cb) {
+    exports.getUserData(username, function(userData) {
+        if( userData ) {
+            var layouts = userData.layouts || {};
+            var newLayouts = layoutsToKeep.reduce(function(p, c) {
+                p[c] = layouts[c];
+                return p;
+            }, {});
+            userData.layouts = newLayouts;
+            updateUserData(username, userData, cb);
+        } else {
+            cb(false);
+        }
+    });
+};
 
 function updateUserData (user, data, cb) {
     var users = db.get('users');

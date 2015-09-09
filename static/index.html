@@ -31,7 +31,7 @@
 
 		<script id="layoutListTemplate" type="text/x-handlebars-template">
 			{{#layouts}}
-				<div class="layoutPreview" data-name="{{layout}}">
+				<div class="layoutPreview" data-name="{{layout}}" data-layout="{{id}}">
 					<img class="layoutIcon" src="img/icon_{{layout}}.png">
 					{{#each apps}}
 						<img class="layoutAppIcon" src="{{getAppIcon this}}" title="{{this}}" alt="{{this}}">
@@ -39,6 +39,7 @@
 					{{#each hours}}
 						<span class="badge">{{from}}:00 - {{to}}:00</span>
 					{{/each}}
+					<button class="removeLayout btn btn-sm" type="button"><i class="fa fa-times fa-2x"></i></button>
 				</div>
 			{{/layouts}}
 		</script>
@@ -48,7 +49,8 @@
 				<div class="appItem" data-name="{{this.name}}" {{#if interactionView}} data-settings="true" {{/if}}>
 					<img src="{{this.icon}}" alt="{{this.name}}" title="{{this.name}}">
 				  	<h4>{{this.name}}</h4>
-				  	<button class="appSettings btn btn-sm" type="button"><i class="fa fa-cog fa-2x"></i></button>
+				  	<button class="hiddenInitial appSettings btn btn-sm" type="button"><i class="fa fa-cog fa-2x"></i></button>
+				  	<button class="hiddenInitial removeApp btn btn-sm" type="button"><i class="fa fa-times fa-2x"></i></button>
 				  	<span>{{this.description}}</span>
 				</div>
 	        {{/apps}}

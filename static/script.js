@@ -198,6 +198,29 @@ $(function () {
     }
 
     function setupShowLayouts() {
+        var removeLayout = function() {
+            $(this).parent().remove()
+        };
+
+        var saveLayouts = function() {
+            var $dialog = $(this),
+                user = $('#inputID').val(),
+                layouts = $dialog.find('.layoutPreview').map(function(i, el){
+                    return $(el).data('layout');
+                }).toArray();
+
+            waitingDialog.show();
+            $.post('apps/'+user, {
+                layoutsSaved: layouts
+            }, function(res) {
+                if (res.success)
+                    showAlert('#settingsActions .alert-success');
+                else 
+                    showAlert('#settingsActions .alert-danger');
+                waitingDialog.hide();
+                $dialog.dialog( "close" );
+            }, 'json');
+        };
 
         $('#savedLayouts').dialog({
           autoOpen: false,
@@ -208,28 +231,32 @@ $(function () {
             Chiudi: function() {
               $(this).dialog( "close" );
             },
-            Salva: function(){}
+            Salva: saveLayouts
           }
         });
+
 
         $('#showLayouts').click(function() {
             var $btn = $(this).button('loading')
             getUserData(function(res) {
                 var layouts = Object.keys(res.layouts).map(function (key) {
+                    res.layouts[key].id = key;
                     return res.layouts[key];
                 });
-                console.log(layouts);
                 var template = $('#layoutListTemplate').html();
                 var compiledTemplate = Handlebars.compile(template);
                 var result = compiledTemplate({
                     layouts: layouts
                 });
-                console.log(res.layouts);
                 $('#savedLayouts').html(result);
                 $('#savedLayouts').dialog('open');
                 $btn.button('reset');
+
+                $('.removeLayout').click(removeLayout);
             });
         });
+
+
     }
 
     function showAlert(selector) {
@@ -241,10 +268,14 @@ $(function () {
 
     
     function setupAppSettings() {
-        $('.appSettings').hide();
+        $('.hiddenInitial').hide();
         $('.appSettings').click(function() {
             var app = $(this).parent().data('name');
             $('.appDialog[data-name="'+app+'"]').dialog( "open" );
+        });
+        $('.removeApp').click(function() {
+            var app = $(this).parent().data('name');
+            resetApp(app);
         });
     }
 
@@ -263,21 +294,33 @@ $(function () {
         }
         apps[$(this).index()] = ui.draggable.data('name');
         layout.data('apps', apps);
-
+        $(this).attr('data-app', ui.draggable.data('name'));
         if ( ui.draggable.data('settings') ) {
             ui.draggable.children('.appSettings').show();
         }
+        ui.draggable.children('.removeApp').show();
     }
 
-    function resetDraggable() {
-        $('.appItem').removeClass('correct').draggable( 'enable' )
+    function resetApp(name) {
+        var selector = '.appItem';
+        if (name) selector+= '[data-name='+name+']';
+        $(selector).removeClass('correct').draggable( 'enable' )
                     .draggable( 'option', 'revert', true )
                     .animate({
                         top: "0px",
                         left: "0px"
-                    }).children('.appSettings').hide();
+                    })
+                    .each(function() {
+                        $('.cell[data-app='+name+']')
+                            .data('app', "")
+                            .droppable( 'enable' )
+                            .children('span').show();
+                    })
+                    .children('.hiddenInitial').hide();
+    }
 
-        $('.screen.visible .cell').droppable( 'enable' );
+    function resetDraggable() {
+        resetApp();
     }
 
     function capitalizeString(string) {
