@@ -1,3 +1,6 @@
+var userData = null,
+    appsData = null;
+
 $(function () {
     hideUnusedElements();
     setupLoginForm();
@@ -11,6 +14,16 @@ $(function () {
 
     Handlebars.registerHelper('getAppIcon', function(name) {
         return name && $('.appItem[data-name='+name+']').children('img').attr('src');
+    });
+
+    Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
+        if (arguments.length < 3)
+            throw new Error("Handlebars Helper equal needs 2 parameters");
+        if( lvalue!=rvalue ) {
+            return options.inverse(this);
+        } else {
+            return options.fn(this);
+        }
     });
 
     function hideUnusedElements() {
@@ -27,6 +40,8 @@ $(function () {
             event.preventDefault();
             getUserData(function(res) {
                 if (res.success) {
+                    userData = res;
+                    setAppSettingDialogs();
                     loginForm.fadeOut(200, function() {
                         $('#mainView').show();
                         waitingDialog.hide();
@@ -75,35 +90,41 @@ $(function () {
             setupAppSettings();
         };
 
-        var setDialogs = function(apps) {
-            var dialogs = dialogCompiled({apps: apps.map(function(app) {
-                app.title = 'Impostazioni per '+capitalizeString(app.name);
-                return app;
-            })});
-
-            $('body').append(dialogs);
-
-            $('.appDialog').dialog({
-              autoOpen: false,
-              height: 400,
-              width: 450,
-              modal: true,
-              buttons: {
-                Annulla: function() {
-                  $(this).dialog( "close" );
-                },
-                Salva: saveAppSettings
-              }
-            });
-            $('.ui-dialog-buttonset button').addClass('btn btn-sm btn-primary');
-        };
-
         $.getJSON('/apps', function(apps) {
             var result = compiledTemplate({apps: apps});
             $('#appList').html(result);
             setDraggables();
-            setDialogs(apps);
+            appsData = apps;
         });
+    }
+
+    function setAppSettingDialogs() {
+        var dialogTemplate = $('#appDialogTemplate').html();
+        var dialogCompiled = Handlebars.compile(dialogTemplate);
+        var dialogs = dialogCompiled({apps: appsData.map(function(data) {
+            data.title = capitalizeString(data.name);
+            if (data.interactionView && userData && userData[data.name]) {
+                var interactionTemplate = Handlebars.compile(data.interactionView);
+                data.interactionView = interactionTemplate(userData[data.name]);
+            }
+            return data;
+        })});
+
+        $('body').append(dialogs);
+
+        $('.appDialog').dialog({
+          autoOpen: false,
+          height: 400,
+          width: 450,
+          modal: true,
+          buttons: {
+            Annulla: function() {
+              $(this).dialog( "close" );
+            },
+            Salva: saveAppSettings
+          }
+        });
+        $('.ui-dialog-buttonset button').addClass('btn btn-sm btn-primary');
     }
 
     function saveAppSettings() {

@@ -40,6 +40,8 @@ exports.getAppView = function(app, layout, noDefault) {
     }
     var viewPath = getViewPath(layout);
 
+    if (!app) return "";
+    
     if (fs.existsSync(viewPath))
         return fs.readFileSync(viewPath, 'utf8');
     else if(!noDefault)

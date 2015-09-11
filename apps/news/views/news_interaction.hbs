@@ -4,19 +4,19 @@
 		<div class="row">
 		    <div class="btn-group-vertical" data-toggle="buttons">
 		        <label class="btn btn-default">
-		            <input type="radio" name="topic" value="w">Esteri
+		            <input type="radio" name="topic" {{#equal topic "w" }} checked {{/equal}} value="w">Esteri
 		        </label>
 		        <label class="btn btn-default">
-		            <input type="radio" name="topic" value="n">Italia
+		            <input type="radio" name="topic" {{#equal topic "n" }} checked {{/equal}} value="n">Italia
 		        </label>
 		        <label class="btn btn-default">
-		            <input type="radio" name="topic" value="b">Economia
+		            <input type="radio" name="topic" {{#equal topic "b" }} checked {{/equal}} value="b">Economia
 		        </label>
 		        <label class="btn btn-default">
-		            <input type="radio" name="topic" value="t">Scienza e tecnologia
+		            <input type="radio" name="topic" {{#equal topic "t" }} checked {{/equal}} value="t">Scienza e tecnologia
 		        </label>
 		        <label class="btn btn-default">
-		            <input type="radio" name="topic" value="">Tutti
+		            <input type="radio" name="topic" {{#equal topic "" }} checked {{/equal}} value="">Tutti
 		        </label>
 		    </div>
 		  </div>
