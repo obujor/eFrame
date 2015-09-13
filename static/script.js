@@ -26,6 +26,22 @@ $(function () {
         }
     });
 
+    Handlebars.registerHelper('times', function(n, block) {
+        var accum = '';
+        for(var i = 0; i < n; ++i)
+            accum += block.fn(i);
+        return accum;
+    });
+
+    Handlebars.registerHelper('getProp', function(data, prefix, index) {
+        return data[prefix+index];
+    });
+
+    Handlebars.registerHelper('ifProp', function(data, prefix, index, options) {
+      if (data[prefix+index])
+        return options.fn(this);
+    });
+
     function hideUnusedElements() {
         $('#mainView').hide();
         $('#settingsActions .alert').hide();
@@ -103,7 +119,7 @@ $(function () {
         var dialogCompiled = Handlebars.compile(dialogTemplate);
         var dialogs = dialogCompiled({apps: appsData.map(function(data) {
             data.title = capitalizeString(data.name);
-            if (data.interactionView && userData && userData[data.name]) {
+            if (data.interactionView && userData) {
                 var interactionTemplate = Handlebars.compile(data.interactionView);
                 data.interactionView = interactionTemplate(userData[data.name]);
             }
@@ -142,6 +158,7 @@ $(function () {
         }, {});
 
         waitingDialog.show();
+        console.log(data);
         $.post('apps/'+user+'/'+app, data, function(res) {
             if (res.success) {
                 dialog.dialog('close');

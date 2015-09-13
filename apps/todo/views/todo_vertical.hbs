@@ -1,0 +1,8 @@
+<div id="todo">
+	<div class="title"><img src="{{resource 'todo' 'icon.png'}}"> Todo</div>
+	<ul>
+		{{#eachSliced todo limit="10"}}
+		<li class="task {{#if done }} done {{/if}}">{{task}}</li>
+		{{/eachSliced}}
+	</ul>
+</div>

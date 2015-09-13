@@ -1,0 +1,47 @@
+#todo {
+	font-size: 2em;
+	padding: 5px;
+	img {
+		margin: 0px auto;
+		width: 64px;
+	}
+	.title {
+		text-align: center;
+		border-bottom: 0px solid black;
+		margin-bottom: 10px;
+		font-weight: bold;
+		font-size: 30px;
+	}
+	ul {
+		margin: 10px;
+		padding-left: 10px;
+		li {
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		li.task.done {
+			text-decoration: line-through;
+			font-weight: normal;
+		}
+	}
+
+}
+.layout_cell #todo {
+	font-size: 1em;
+	ul {
+	  columns: 2;
+	  -webkit-columns: 2;
+	  -moz-columns: 2;
+	}
+}
+.layout_horizontal #todo {
+	font-size: 1.3em;
+	ul {
+	  columns: 2;
+	  -webkit-columns: 2;
+	  -moz-columns: 2;
+	}
+}
+.layout_vertical #todo {
+	font-size: 1.5em;
+}

@@ -3,19 +3,19 @@
 	<form>
 		<div class="row">
 		    <div class="btn-group-vertical" data-toggle="buttons">
-		        <label class="btn btn-default">
+		        <label class="btn btn-default {{#equal topic "w" }} active {{/equal}}">
 		            <input type="radio" name="topic" {{#equal topic "w" }} checked {{/equal}} value="w">Esteri
 		        </label>
-		        <label class="btn btn-default">
+		        <label class="btn btn-default {{#equal topic "n" }} active {{/equal}}">
 		            <input type="radio" name="topic" {{#equal topic "n" }} checked {{/equal}} value="n">Italia
 		        </label>
-		        <label class="btn btn-default">
+		        <label class="btn btn-default {{#equal topic "b" }} active {{/equal}}">
 		            <input type="radio" name="topic" {{#equal topic "b" }} checked {{/equal}} value="b">Economia
 		        </label>
-		        <label class="btn btn-default">
+		        <label class="btn btn-default {{#equal topic "t" }} active {{/equal}}">
 		            <input type="radio" name="topic" {{#equal topic "t" }} checked {{/equal}} value="t">Scienza e tecnologia
 		        </label>
-		        <label class="btn btn-default">
+		        <label class="btn btn-default {{#equal topic "" }} active {{/equal}}">
 		            <input type="radio" name="topic" {{#equal topic "" }} checked {{/equal}} value="">Tutti
 		        </label>
 		    </div>
