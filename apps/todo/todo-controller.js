@@ -1,5 +1,5 @@
 exports.getData = function (user, device, cb) {
-    var data = user.todo;
+    var data = user.todo || {};
     var tasks = [];
     Object.keys(data).forEach(function(key) {
         var parts = key.split('_');
