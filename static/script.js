@@ -34,11 +34,11 @@ $(function () {
     });
 
     Handlebars.registerHelper('getProp', function(data, prefix, index) {
-        return data[prefix+index];
+        return data && data[prefix+index];
     });
 
     Handlebars.registerHelper('ifProp', function(data, prefix, index, options) {
-      if (data[prefix+index])
+      if (data && data[prefix+index])
         return options.fn(this);
     });
 
