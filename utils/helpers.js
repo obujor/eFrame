@@ -59,6 +59,11 @@ exports.temperature = function(temp) {
     return Math.round(temp);
 }
 
+exports.getTime = function(oldDate) {
+    var newDate = new Date(oldDate);
+    return dateFormat(newDate, "HH:MM");
+}
+
 exports.dateNow = function() {
     var now = new Date();
     return dateFormat(now, "dd/mm/yyyy");

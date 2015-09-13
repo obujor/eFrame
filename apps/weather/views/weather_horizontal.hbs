@@ -1,5 +1,5 @@
 <div id="weather">
-	<div class="header"><i class="owf owf-{{weather.weather.[0].id}}"></i></div>
-	<div class="title"><span class="city">{{weather.name}}</span>, <span class="date">{{dateNow}}</span></div>
-	<div class="details"><span class="temperature">{{temperature weather.main.temp}}</span><span class="desc">{{weather.weather.[0].description}}</span></div>
+	<div class="header"><i class="owf owf-{{weather.list.[0].weather.[0].id}}"></i></div>
+	<div class="title"><span class="city">{{weather.city.name}}</span> <span class="date">{{dateNow}}</span></div>
+	<div class="details"><span class="temperature">{{temperature weather.list.[0].main.temp}}</span><span class="desc">{{weather.list.[0].weather.[0].description}}</span></div>
 </div>
