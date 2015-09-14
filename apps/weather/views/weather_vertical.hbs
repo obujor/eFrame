@@ -2,7 +2,7 @@
 	<div class="title"><span class="city">{{weather.city.name}}</span>, <span class="date">{{dateNow}}</span></div>
 		{{#eachSliced weather.list limit="5"}}	
 	<div class="weatherRow">
-		<div class="time">{{getTime dt_txt}}<i class="owf owf-{{weather.[0].id}}"></i></div>
+		<div class="time">{{getTime dt_txt}}<i class="owf owf-{{weather.[0].id}}-{{isDay dt_txt}}"></i></div>
 		<div class="detailsvert"><span class="temperature">{{temperature main.temp}}</span><span class="desc">{{weather.[0].description}}</span></div>
 	</div>
 		{{/eachSliced}}	

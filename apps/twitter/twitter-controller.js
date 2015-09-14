@@ -12,7 +12,8 @@ exports.getData = function (user, device, cb) {
 
 function getHomeTimeline(cb) {
    var params = {
-        count: 5
+        count: 5,
+	exclude_replies: true
     };
     client.get('statuses/home_timeline', params, function(error, tweets, response) {
       if (!error) {

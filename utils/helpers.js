@@ -64,6 +64,14 @@ exports.getTime = function(oldDate) {
     return dateFormat(newDate, "HH:MM");
 }
 
+exports.isDay = function(date) {
+	var hour = dateFormat(new Date(date), "HH");
+	if (parseInt(hour) >= 21 || parseInt(hour) < 6)
+		return "n";
+	else
+		return "d";
+}
+
 exports.dateNow = function() {
     var now = new Date();
     return dateFormat(now, "dd/mm/yyyy");
