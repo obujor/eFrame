@@ -25,8 +25,7 @@ def showImg(imgb64):
 	call('zcat %s | /usr/local/Kobo/pickel showpic' % (imgPath), shell=True)
 
 def sleep(sec):
-	print('sleep '+str(sec))
-	#call('sh '+rootDir+'sleep.sh %d' % (sec), shell=True)
+	call('sh '+rootDir+'sleep.sh %d' % (sec), shell=True)
 
 def update():
 	battery = getBat()
