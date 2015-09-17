@@ -1,0 +1,60 @@
+#xkcd {
+	padding: 5px;
+	.title {
+		img {
+			margin: 0px auto;
+			width: 64px;
+		}
+		text-align: center;
+		border-bottom: 0px solid black;
+		margin-bottom: 10px;
+		font-weight: bold;
+		font-size: 30px;
+	}
+	.image {
+		margin-bottom: 10px;
+		img {
+			margin: 0px auto;
+			vertical-align: middle;
+		}
+		text-align: center;
+		
+	}
+}
+
+.layout_horizontal #xkcd {
+	.image{
+		img{
+			max-height: 220px;
+			max-width: 750px;
+		}
+	}
+}
+.layout_vertical #xkcd {
+        .image{
+                img{
+			max-height: 500px;
+			max-width: 350px;
+                }
+        }
+}
+.layout_cell #xkcd {
+        .image{
+                img{
+                        max-height: 220px;
+                        max-width: 350px;
+                }
+        }
+}
+
+
+.layout_full #xkcd {
+        .image{
+                img{
+                        max-height: 500px;
+			max-width: 750px;
+                }
+        }
+}
+
+
