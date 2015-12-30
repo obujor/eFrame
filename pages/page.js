@@ -17,6 +17,7 @@ module.exports = function (req, res, next) {
         };
 
         appsUtils.getData(data, function(appsData) {
+	    console.info('render ', new Date(), data.user.username, data.device.battery);
             res.render('page', context.create(context.merge(data, appsData)));
         });
     });

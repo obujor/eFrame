@@ -8,6 +8,7 @@ exports.getData = function (user, device, cb) {
         if (!error && response.statusCode == 200) {
             var data = JSON.parse(body);
             cb(data);
-        }
+        } else 
+	    cb({});
     });
 };

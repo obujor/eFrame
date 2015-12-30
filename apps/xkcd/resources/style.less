@@ -1,4 +1,5 @@
 #xkcd {
+	position: relative;
 	padding: 5px;
 	.title {
 		img {
@@ -10,14 +11,20 @@
 		margin-bottom: 10px;
 		font-weight: bold;
 		font-size: 30px;
+		height: 70px;
 	}
 	.image {
-		margin-bottom: 10px;
+		text-align: center;
+		white-space: nowrap;
+	        &:before {
+			content: "";
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}	
 		img {
-			margin: 0px auto;
 			vertical-align: middle;
 		}
-		text-align: center;
 		
 	}
 }
@@ -50,6 +57,7 @@
 
 .layout_full #xkcd {
         .image{
+		height: 500px;
                 img{
                         max-height: 500px;
 			max-width: 750px;

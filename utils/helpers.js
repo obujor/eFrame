@@ -91,7 +91,7 @@ function getLayoutConfig(userData) {
 }
 
 function findLayoutsByHour(layouts) {
-    var hour = new Date().getHours();
+    var hour = new Date().getHours() || 24;
     layouts = Object.keys(layouts).map(function (key) {
                 return layouts[key];
             });
