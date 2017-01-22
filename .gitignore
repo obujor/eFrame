@@ -1,3 +1,5 @@
 /node_modules
+/data
 .sass-cache
 *.map
+all.log

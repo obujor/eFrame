@@ -1,2 +1,0 @@
-{"_id":{"$oid":"55e42eb726345b1fad633efe"},"apps":["news","weather"],"city":"Bologna","lang":"it","layout":"leftright","username":"test1"}
-{"_id":{"$oid":"55e464240d223fd933cad9c3"},"apps":["weather","news"],"city":"Reggio nell'Emilia","lang":"it","layout":"leftright","username":"test2"}

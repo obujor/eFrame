@@ -1,8 +1,32 @@
 var context = require('./context.js'),
-    db = require('monk')('localhost/eframe');
+    Datastore = require('nedb'),
+    users = new Datastore({ filename: 'data/users.db', autoload: true });
+
+createTestUser();
+
+function createTestUser() {
+    var testUser = {
+        username: 'test',
+        apps: ['news','weather'],
+        city: 'Bologna',
+        lang: 'it',
+        layout: 'leftright'
+    };
+    var addUser = function() {
+        users.insert(testUser, function(err, user) {
+            if (!err) {
+                console.info('Test user has been created successfully');
+            }
+        });
+    }
+    users.find({username: testUser.username}, function (err, res) {
+        if (!err && res.length === 0) {
+            addUser();
+        }
+    });
+}
 
 exports.getUserData = function (username, cb) {
-    var users = db.get('users');
     users.find({username: username}, function(err, res) {
         cb(res[0]);
     });
@@ -63,7 +87,6 @@ exports.removeUserLayouts = function(username, layoutsToKeep, cb) {
 };
 
 function updateUserData (user, data, cb) {
-    var users = db.get('users');
     users.update({username: user}, data, function(err, res) {
         cb((!err && res > 0));
     });
